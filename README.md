@@ -10,13 +10,16 @@ This is an interactive dashboard to stimulate a random forest model on your data
 - Metrics: Accuracy, R2, **Confusion_matrix**, F1 Score, Log Loss, Recall, Presicion Etc..
 - Easy way to understand Random Forest. 
 
-Hope you have a enjoyable journey ahead!
+Hope you enjoy it.!
 
 ## Limitations:
 - File size should be less than 200MB.
 - Feature Engineering is limited
-**- Currently this is not hosted yet**
+- **Currently this is not hosted yet**
 
 ## How to use this:
-` pip install --upgrade streamlit`
-` streamlit run https://raw.githubusercontent.com/Prudhvi0001/RandomForestDashboard/master/main.py`
+
+```shell
+pip install --upgrade streamlit
+streamlit run https://raw.githubusercontent.com/Prudhvi0001/RandomForestDashboard/master/main.py
+```
