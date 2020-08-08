@@ -2,6 +2,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import io
 import plotly.express as px
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
@@ -12,6 +13,7 @@ from sklearn.metrics import accuracy_score, recall_score, precision_score, f1_sc
 # Remove Warnings
 import warnings
 warnings.filterwarnings('ignore')
+st.set_option('deprecation.showfileUploaderEncoding', False)
 
 showWarningOnDirectExecution = False
 
@@ -22,12 +24,14 @@ st.title("Random Forest Explorer")
 st.markdown(
     """
     Hi there this a tool where you can upload a dataset and fine tune a random forest model and 
-    check the results in a interactive way let me known if this helpful or check my [github](https://github.com/Prudhvi0001) to create your own machine learning model explorer with a few tweaks
+    check the results in a interactive way let me known if this helpful or check my [github](https://github.com/Prudhvi0001) 
+    to create your own machine learning model explorer with a few tweaks
+
+    **If Your file size is too high Create a small version of your data file and check how Random Forest works on your model**
     """
     )
 
-# File Upload widget
-uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+
 
 def statistics(data):
     st.sidebar.header('Stats of the Data')
@@ -44,7 +48,7 @@ def visualize(data):
     if st.sidebar.checkbox('Plot Histograms of each column:'):
         column = st.selectbox('hist_column', data.columns)
         color_var = st.selectbox('Color_variable_hist', [None]+list(data.columns))
-        bins = st.slider('No:Of Bins', min_value=1, max_value=50, value=10, step=2)
+        bins = st.slider('No:Of Bins', min_value=1, max_value=50, value=10, step=1)
         fig = px.histogram(data, x = column, nbins = bins, color = color_var)
         st.plotly_chart(fig)
 
@@ -84,13 +88,16 @@ def model(data):
         st.balloons()
 
         
+# File Upload widget
+uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
 
 if uploaded_file is not None:
+    # uploaded_file = io.TextIOWrapper(uploaded_file)
     data = pd.read_csv(uploaded_file)
     st.write(data.head(5))
     statistics(data)
     visualize(data)
-    st.sidebar.header("Cool! let's Build a model.")
+    st.sidebar.header("Cool! Let's Build a model.")
     if st.sidebar.checkbox("Run Model Analysis:"):
         model(data)
     # st.balloons()
