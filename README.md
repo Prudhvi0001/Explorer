@@ -2,6 +2,8 @@
 
 This is an interactive dashboard to stimulate a random forest model on your data for those who want to run a quick model or someone without programming knowledge.
 
+Heroku App [Link](https://shrouded-harbor-01593.herokuapp.com)
+
 ## Noteable Features:
 - Statistics of the data
 - Feature correlation Heat Map
@@ -15,7 +17,6 @@ Hope you enjoy it.!
 ## Limitations:
 - File size should be less than 200MB.
 - Feature Engineering is limited
-- **Currently this is not hosted yet**
 
 ## How to use this:
 
