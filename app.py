@@ -23,11 +23,11 @@ st.title("Random Forest Explorer")
 # Description about the app using markdown format
 st.markdown(
     """
-    Hi there this a tool where you can upload a dataset and fine tune a random forest model and 
+    Hi there! this a tool where you can upload a dataset and fine tune a random forest model and 
     check the results in a interactive way let me known if this helpful or check my [github](https://github.com/Prudhvi0001) 
     to create your own machine learning model explorer with a few tweaks
 
-    **If Your file size is too high Create a small version of your data file and check how Random Forest works on your model**
+    **If Your file size is too high Create a small version of your data file and check how Random Forest works on your Data**
     """
     )
 
@@ -78,6 +78,7 @@ def model(data):
         xtrain,xtest,ytrain,ytest = train_test_split(data, target_data, test_size = test_size, random_state = 42, stratify = target_data)
 
     model = st.sidebar.selectbox("Select the model", ['RandomForestClassifier', 'RandomForestRegressor'])
+
     if model == 'RandomForestClassifier':
         m = RandomForestClassifier()
     elif model == 'RandomForestRegressor':
@@ -94,7 +95,7 @@ uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
 if uploaded_file is not None:
     # uploaded_file = io.TextIOWrapper(uploaded_file)
     data = pd.read_csv(uploaded_file)
-    st.write(data.head(5))
+    st.write("Top 5 Rows:", data.head(5))
     statistics(data)
     visualize(data)
     st.sidebar.header("Cool! Let's Build a model.")
@@ -127,3 +128,37 @@ if uploaded_file is not None:
 
 # status_text.text('Done!')
 # st.balloons()
+
+# int maxArithmeticLength(vector<int> a, vector<int> b) {
+#     unordered_set<int> diffs;
+#     unordered_set<int> m;
+#     for (auto x : b) m.insert(x);
+#     diffs.insert(a[1] - a[0]);
+#     for (auto x : b) if (x - a[0] > 0) diffs.insert(x - a[0]);
+#     int rtnVal = -1;
+#     for (auto diff : diffs) {
+#         int i = 0;
+#         int curr = a[0];
+#         int ans = 0;
+#         // handle if b[i] < a[0]
+#         int c = a[0];
+#         while (m.count(c - diff)) {
+#             c -= diff;
+#             ans++;
+#         }
+#         while (i < a.size()) {
+#             if (m.count(curr + diff)) {
+#                 curr = curr + diff;
+#             } else if (i < a.size() - 1 && curr + diff == a[i + 1]) {
+#                 curr = a[++i];
+#                 continue;
+#             } else {
+#                 break;
+#             }
+#             ans++;
+#         }
+#         if (i == a.size() - 1)
+#             rtnVal = max(rtnVal, ans + (int)a.size());
+#     }
+#     return rtnVal;
+# }
