@@ -17,25 +17,53 @@ st.set_option('deprecation.showfileUploaderEncoding', False)
 
 showWarningOnDirectExecution = False
 
-# Title of the App
-st.title("Random Forest Explorer")
+@st.cache(suppress_st_warning=True)
+def homepage():
+    # Title of the App
+    st.title("🎄 Explorer 🎄")
 
-# Description about the app using markdown format
-st.markdown(
-    """
-    Hi there! this a tool where you can upload a dataset and fine tune a random forest model and 
-    check the results in a interactive way let me known if this helpful or check my [github](https://github.com/Prudhvi0001) 
-    to create your own machine learning model explorer with a few tweaks
-
-    **If Your file size is too high Create a small version of your data file and check how Random Forest works on your Data**
-    """
-    )
-
+    # What can you do?
+    st.markdown(
+        """
+        <style>
+        footer {visibility: hidden;}
+        </style>
+        Hi there! 👋  This is an interactive data analysis and model building tool.
+        
+        **Key Features:**
+        - Generate interative plots 📊 📉 📺
+        - Statsitical analysis of the Data 📝 🗜 🛠
+        - Wide range Metrics to understand the model 🔎 📈 ⚙️
+        - Ensemble different models for better predictions. ⛓ ⚖️
+        
+        A lot more to come.
+        
+        **NOTE:** Only supports files with **size < 200MB**
+        
+        **Recommendations:** If you have a large file create a small version of it and play around to get faster results.
+        
+        
+        ### If you want run this locally:
+        
+        ```Shell
+        pip install streamlit
+        streamlit run https://raw.githubusercontent.com/Prudhvi0001/RandomForestDashboard/master/app.py
+        ```
+        
+        
+        ### **`FootNotes:`**
+        
+        - Authour: [Prudhvi Vajja](https://github.com/Prudhvi0001)
+        - Source Code: [Explorer](https://github.com/Prudhvi0001/RandomForestDashboard)
+        - LINCENSE: **FREE TO USE**
+        """, unsafe_allow_html=True)
 
 
 def statistics(data):
+    st.title("Get ready to become a Statistician 👨‍🏫")
     st.sidebar.header('Stats of the Data')
     if st.sidebar.checkbox("Get the stats"):
+        st.write("Top 5 Rows:", data.head(5))
         st.write('Data Shape:', data.shape)
         st.write('Description of data:', data.describe())
         st.write('Data Info:', data.dtypes)
@@ -50,7 +78,7 @@ def visualize(data):
         color_var = st.selectbox('Color_variable_hist', [None]+list(data.columns))
         bins = st.slider('No:Of Bins', min_value=1, max_value=50, value=10, step=1)
         fig = px.histogram(data, x = column, nbins = bins, color = color_var)
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, )
 
     if st.sidebar.checkbox("Scatter plot:"):
         column1 = st.selectbox('X-axis_scatter', data.columns)
@@ -88,77 +116,22 @@ def model(data):
         st.write("R2 Score:", m.score(xtrain,ytrain))
         st.balloons()
 
-        
+
+homepage()
+
+
 # File Upload widget
-uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+uploaded_file = st.sidebar.file_uploader("Choose a CSV file", type="csv")
+
+if uploaded_file is None:
+    homepage()
+
 
 if uploaded_file is not None:
     # uploaded_file = io.TextIOWrapper(uploaded_file)
     data = pd.read_csv(uploaded_file)
-    st.write("Top 5 Rows:", data.head(5))
     statistics(data)
     visualize(data)
     st.sidebar.header("Cool! Let's Build a model.")
     if st.sidebar.checkbox("Run Model Analysis:"):
         model(data)
-    # st.balloons()
-
-
-# # statistics(data)
-# import time
-# progress_bar = st.progress(0)
-# status_text = st.empty()
-# chart = st.line_chart(np.random.randn(10, 2))
-
-# for i in range(100):
-#     # Update progress bar.
-#     progress_bar.progress(i + 1)
-
-#     new_rows = np.random.randn(10, 2)
-
-#     # Update status text.
-#     status_text.text(
-#         'The latest random number is: %s' % new_rows[-1, 1])
-
-#     # Append data to the chart.
-#     chart.add_rows(new_rows)
-
-#     # Pretend we're doing some computation that takes time.
-#     time.sleep(0.1)
-
-# status_text.text('Done!')
-# st.balloons()
-
-# int maxArithmeticLength(vector<int> a, vector<int> b) {
-#     unordered_set<int> diffs;
-#     unordered_set<int> m;
-#     for (auto x : b) m.insert(x);
-#     diffs.insert(a[1] - a[0]);
-#     for (auto x : b) if (x - a[0] > 0) diffs.insert(x - a[0]);
-#     int rtnVal = -1;
-#     for (auto diff : diffs) {
-#         int i = 0;
-#         int curr = a[0];
-#         int ans = 0;
-#         // handle if b[i] < a[0]
-#         int c = a[0];
-#         while (m.count(c - diff)) {
-#             c -= diff;
-#             ans++;
-#         }
-#         while (i < a.size()) {
-#             if (m.count(curr + diff)) {
-#                 curr = curr + diff;
-#             } else if (i < a.size() - 1 && curr + diff == a[i + 1]) {
-#                 curr = a[++i];
-#                 continue;
-#             } else {
-#                 break;
-#             }
-#             ans++;
-#         }
-#         if (i == a.size() - 1)
-#             rtnVal = max(rtnVal, ans + (int)a.size());
-#     }
-#     return rtnVal;
-# }
