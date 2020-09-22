@@ -22,5 +22,5 @@ Hope you enjoy it.!
 
 ```shell
 pip install --upgrade streamlit
-streamlit run https://raw.githubusercontent.com/Prudhvi0001/RandomForestDashboard/master/main.py
+streamlit run https://raw.githubusercontent.com/PrudhviVajja/RandomForestDashboard/master/app.py
 ```
